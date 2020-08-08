@@ -44,8 +44,4 @@ app.use((error, req, res, next) => {
   });
 });
 
-
-// "PASSWORD": "Chato225%24%23%40"
-
-
 module.exports = app;
