@@ -20,7 +20,7 @@ app.use('/', (req, res, next) => {
   next();
 })
 
-mongoose.connect(`mongodb+srv://jazzy:${process.env.PASSWORD}@journal.26ukp.mongodb.net/photo-uploader?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://jazzy:${process.env.PASSWORD}@${process.env.CLUSTER}.26ukp.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
