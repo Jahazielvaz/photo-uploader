@@ -5,9 +5,11 @@ const mongoose = require('mongoose');
 
 const Photo = require('./photosModel');
 
+// const upload = multer({ dest: 'uploads/'});
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './uploads/')
+    cb(null, 'uploads/')
   },
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString() + file.originalname)
@@ -15,21 +17,46 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-  destination: storage,
+  storage: storage,
   limits: {fileSize: 1200 * 1200 * 5}
 })
 
+
 router.get('/', (req, res, next) => {
-
+  Photo.find()
+    .exec()
+    .then(result => {
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 });
 
-router.get('/:imageId', (req, res, next) => {
+// router.get('/:imageId', (req, res, next) => {
+//
+// });
 
-});
+// router.post('/', (req, res, next) => {
+//   const photo = new Photo({
+//     _id: mongoose.Types.ObjectId(),
+//     message: req.body.message
+//   })
+//
+//   photo.save()
+//     .then(result => {
+//       res.status(201).json(result)
+//     })
+//     .catch(err => {
+//       res.status(500).json({
+//         error: err
+//       })
+//     })
+// })
 
 router.post('/', upload.single('imageId'), (req, res, next) => {
   const photo = new Photo({
-    _id: new mongoose.Types.ObjectId(),
+    _id: mongoose.Types.ObjectId(),
     imageId: req.file.path
   });
 
